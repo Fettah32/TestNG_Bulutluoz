@@ -1,5 +1,6 @@
 package tests.day19_smokeTest;
 
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.BrcPage;
@@ -32,4 +33,41 @@ public class NegativeLoginTest {
     // bu class'da 2 test methodu daha oilusturun
     // biri yanlisKullanici
     // digeri de yanlis sifre ve kullanici adi
+
+    @Test
+    public void yanlisKullanici() {
+        brcPage=new BrcPage();
+        Driver.getDriver().get(ConfigReader.getProperty("brcUrl"));
+
+        brcPage.ilkLoginButonu.click();
+
+        brcPage.emailTextBox.sendKeys(ConfigReader.getProperty("brcWrongEmail"));
+
+        brcPage.passwordTextBox.sendKeys(ConfigReader.getProperty("brcValidPassword"));
+
+        brcPage.ikinciLoginButonu.click();
+
+        Assert.assertTrue(brcPage.ikinciLoginButonu.isDisplayed());
+
+        Driver.closeDriver();
+    }
+
+    @Test
+    public void yanlisSifreYanlisKullaniciAdi() {
+        brcPage=new BrcPage();
+
+        Driver.getDriver().get(ConfigReader.getProperty("brcUrl"));
+
+        brcPage.ilkLoginButonu.click();
+
+        brcPage.emailTextBox.sendKeys(ConfigReader.getProperty("brcWrongEmail"));
+
+        brcPage.passwordTextBox.sendKeys(ConfigReader.getProperty("brcWrongPassword"));
+
+        brcPage.ikinciLoginButonu.click();
+
+        Assert.assertTrue(brcPage.ikinciLoginButonu.isDisplayed());
+
+        Driver.closeDriver();
+    }
 }
